@@ -1,10 +1,11 @@
 import { useState, useLayoutEffect } from "react";
+import { Link } from "react-router-dom";
 import darkLogo from "./assets/dark.svg";
 import lightLogo from "./assets/light.svg";
 import ltrLogo from "./assets/direction-ltr.svg";
 import rtlLogo from "./assets/direction-rtl.svg";
 
-export function Theme() {
+export function TopNav() {
   const [themeChecked, setThemeChecked] = useState(
     localStorage.getItem("theme") === "dark" ? true : false
   );
@@ -50,21 +51,30 @@ export function Theme() {
   };
 
   return (
-    <div className="absolute end-10 top-10 flex items-center justify-center gap-10">
-      <span className="cursor-pointer" onClick={toggleThemeChange}>
-        {themeChecked ? (
-          <img src={darkLogo} className="h-[36px] w-[36px]" alt="logo dark" />
-        ) : (
-          <img src={lightLogo} className="h-[36px] w-[36px]" alt="logo light" />
-        )}
-      </span>
-      <span className="cursor-pointer" onClick={toggleRTLChange}>
-        {rtlChecked ? (
-          <img src={rtlLogo} className="h-[24px] w-[24px]" alt="logo rtl" />
-        ) : (
-          <img src={ltrLogo} className="h-[24px] w-[24px]" alt="logo ltr" />
-        )}
-      </span>
-    </div>
+    <header className="top-0 sticky start-10 z-10 flex min-h-[60px] items-center justify-between bg-bg-white px-20 shadow-100">
+      <Link to={"./home"}>
+        <h3 className="h4-600">Kissflow Design System</h3>
+      </Link>
+      <div className="flex items-center justify-center gap-10">
+        <span className="cursor-pointer" onClick={toggleThemeChange}>
+          {themeChecked ? (
+            <img src={darkLogo} className="h-[24px] w-[24px]" alt="logo dark" />
+          ) : (
+            <img
+              src={lightLogo}
+              className="h-[24px] w-[24px]"
+              alt="logo light"
+            />
+          )}
+        </span>
+        <span className="cursor-pointer" onClick={toggleRTLChange}>
+          {rtlChecked ? (
+            <img src={rtlLogo} className="h-[24px] w-[24px]" alt="logo rtl" />
+          ) : (
+            <img src={ltrLogo} className="h-[24px] w-[24px]" alt="logo ltr" />
+          )}
+        </span>
+      </div>
+    </header>
   );
 }

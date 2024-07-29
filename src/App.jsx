@@ -1,32 +1,85 @@
-import { useState } from "react";
-import reactLogo from "./assets/react.svg";
-import viteLogo from "/vite.svg";
-import { Theme } from "./Theme.jsx";
+import { Switch, Route, Link, useLocation } from "react-router-dom";
+import { TopNav } from "./TopNav.jsx";
 
-import "./App.css";
+import { Home } from "./pages/Home.jsx";
+import { AccordionComponent } from "./pages/Accordion.jsx";
+import { AlertDialogComponent } from "./pages/AlertDialog.jsx";
+import { InputComponent } from "./pages/Input.jsx";
+import { SliderComponent } from "./pages/Slider.jsx";
+import { ButtonComponent } from "./pages/Button.jsx";
+import { ProgressComponent } from "./pages/Progress.jsx";
+
+const ROUTES = [
+  {
+    Name: "Home",
+    Path: "/home",
+    Component: Home,
+    Exact: true
+  },
+  {
+    Name: "Accordion",
+    Path: "/accordion",
+    Component: AccordionComponent
+  },
+  {
+    Name: "Alert",
+    Path: "/alert",
+    Component: AlertDialogComponent
+  },
+  {
+    Name: "Button",
+    Path: "/button",
+    Component: ButtonComponent
+  },
+  {
+    Name: "Input",
+    Path: "/input",
+    Component: InputComponent
+  },
+  {
+    Name: "Progress",
+    Path: "/progress",
+    Component: ProgressComponent
+  },
+  {
+    Name: "Slider",
+    Path: "/slider",
+    Component: SliderComponent
+  }
+];
 
 function App() {
-  const [count, setCount] = useState(0);
-
+  const location = useLocation();
   return (
     <>
-      <Theme />
-      <div className="flex items-center justify-center">
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1 className="small-600 text-gray-999">Vite + React</h1>
-      <div className="mx-10 my-10 flex flex-col items-center gap-12 bg-primary-100 px-20 py-20 text-20 font-medium tracking-h2 text-secondary-eight-500">
-        <button
-          className="rounded-6 border-2 border-solid border-bg-gray bg-primary-500 px-10 text-white hover:bg-primary-600"
-          onClick={() => setCount((count) => count + 1)}
-        >
-          count is {count}
-        </button>
+      <TopNav />
+      <div className="flex flex-1">
+        <aside className="flex min-w-[250px] flex-col border-e border-gray-200 px-4 py-4">
+          {ROUTES.map(({ Name, Path }) => (
+            <Link key={Name} to={Path}>
+              <p
+                className="smallplus flex min-h-[50px] cursor-pointer items-center rounded-4 px-20 py-8 hover:bg-primary-100 hover:text-primary-500 data-[active=true]:text-primary-500"
+                data-active={location.pathname === Path}
+              >
+                {Name}
+              </p>
+            </Link>
+          ))}
+        </aside>
+        <main className="flex flex-1 flex-col bg-bg-overlay-white px-20">
+          <Switch>
+            {ROUTES.map(({ Name, Path, Component, Exact }) => (
+              <Route key={Name} path={Path} exact={Exact}>
+                <label className="base-600 flex min-h-[50px] w-full items-center gap-8 self-start">
+                  <p>Components</p>
+                  <span>{">"}</span>
+                  <p>{Name}</p>
+                </label>
+                <Component />
+              </Route>
+            ))}
+          </Switch>
+        </main>
       </div>
     </>
   );
