@@ -8,6 +8,7 @@ import { InputComponent } from "./pages/Input.jsx";
 import { SliderComponent } from "./pages/Slider.jsx";
 import { ButtonComponent } from "./pages/Button.jsx";
 import { ProgressComponent } from "./pages/Progress.jsx";
+import { SelectComponent } from "./pages/Select.jsx";
 
 const ROUTES = [
   {
@@ -45,6 +46,11 @@ const ROUTES = [
     Name: "Slider",
     Path: "/slider",
     Component: SliderComponent
+  },
+  {
+    Name: "Select",
+    Path: "/select",
+    Component: SelectComponent
   }
 ];
 
